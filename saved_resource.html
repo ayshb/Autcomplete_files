@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<!-- saved from url=(0060)http://fiddle.jshell.net/aybalasubramanian/BVpU3/show/light/ -->
+<html><script id="tinyhippos-injected">if (window.top.ripple) { window.top.ripple("bootstrap").inject(window, document); }</script><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <title>bootstrap typeahead fix - jsFiddle demo by aybalasubramanian</title>
+  
+  <script type="text/javascript" src="jquery-1.9.1.js"></script><style type="text/css"></style>
+  
+  <link rel="stylesheet" type="text/css" href="normalize(1).css">
+  
+  
+  <link rel="stylesheet" type="text/css" href="result-light.css">
+  
+    
+      <script type="text/javascript" src="bootstrap.min.js"></script>
+    
+  
+    
+      <script type="text/javascript" src="bootstrap-typeahead.js"></script>
+    
+  
+  <style type="text/css">
+    @import "https://dl.dropbox.com/s/gp8wz1kx3j1z8on/bootstrap.min.css?token_hash=AAHhYeSpxoMXaFMUbXlsafZUvDQyo03-2oOsR_25PGTRHw&dl=1";
+
+body {
+    padding: 10px;
+}
+  </style>
+  
+
+
+<script type="text/javascript">//<![CDATA[ 
+$(window).load(function(){
+$('.test-attr-input').typeahead({
+    source: [
+      'Alaska',
+      'Alabama',
+      'Illinois'
+    ]
+    
+    // there would be no need to change this function; it is overridden just to show the value difference from the other typeahead
+  , updater: function (item) {
+      $('.test-attr-val').text('Value: '+item);
+      return item
+    }
+});
+
+$('.test-data-input').typeahead({
+    source: [{
+      display: 'Alaska',
+      val: 'AK'
+    },{
+      display: 'Alabama',
+      val: 'AL'
+    },{
+      display: 'Illinois',
+      val: 'IL'
+    }]
+    
+  , updater: function (item) {
+      $('.test-data-val').text('Value: '+item.val);
+      return item.display
+    }
+    
+  , highlighter: function(item) {
+      var query = this.query.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&')
+      return item.display.replace(new RegExp('(' + query + ')', 'ig'), function ($1, match) {
+        return '<strong>' + match + '</strong>'
+      })
+    }
+    
+  , matcher: function(item) {
+      return ~item.display.toLowerCase().indexOf(this.query.toLowerCase())
+    }
+    
+  , sorter: function(items) {
+      return items   
+    }
+});
+});//]]>  
+
+</script>
+
+
+</head>
+<body>
+  <h5>Old way with just an array of strings:</h5>
+<input type="text" class="test-attr-input" placeholder="Type &#39;A&#39;" autocomplete="off">
+<label class="test-attr-val"></label><br>
+    
+<h5>New way with an array of objects:</h5>    
+<input type="text" class="test-data-input" placeholder="Type &#39;A&#39;" autocomplete="off">
+<label class="test-data-val"></label>
+  
+
+
+
+
+
+</body></html>
